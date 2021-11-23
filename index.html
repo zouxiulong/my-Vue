@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my-Vue</title>
+    <style>
+        #app {
+            width: 500px;
+            height: 100%;
+            margin: 20px auto;
+        }
+        /* 
+            <h3>{{name}}</h3>
+            <h3 v-text='person.name'></h3>
+            <div v-bind:bindName='name'></div>
+            <p>name：<input type="text" v-model='name'></p>
+
+        */
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>名称：{{person.name}}</h2>
+        <h2>年龄：{{person.age}}</h2>
+        <hr>
+        v-text：name
+        <h3 v-text='name'></h3>
+
+        <hr>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+        </ul>
+        
+        <hr>
+        v-html：
+        <div v-html='htmlStr'></div>
+        <div v-html='person.htmlStr'></div>
+        <hr>
+        v-bind： <p v-bind:name='person.name'>name属性：{{ person.name }}</p>
+        <hr>
+        <p>v-model：</p>
+        <p>name：<input type="text" v-model='name'></p>
+        <p>person.name：<input type="text" v-model='person.name'></p>
+        <p>person.age：<input type="text" v-model='person.age'></p>
+        
+        <hr>
+        <h2>computed</h2>
+        <p>a：{{ a }}  <button v-on:click='handleradda'>a++</button> &nbsp; <span>{{ watchA }}</span> </p>
+        <p>b：{{ b }}  <button v-on:click='handleraddb'>b++</button> &nbsp; <span>{{ watchB }}</span> </p>
+        <p>total：{{ total }}  &nbsp; <span>{{ watchTotal }}</span> </p>
+        <p > a + b = {{ total }}</p>
+        
+        <hr>
+        事件：
+        <button v-on:click='handlerClick'>点击修改name数据</button>
+    </div>
+
+    <script src="./js/utlis/utlis.js"></script>
+    <script src="./js/Computed.js"></script>
+    <script src="./js/Watch/Watch.js"></script>
+    <script src="./js/Compile/Watcher.js"></script>
+    <script src="./js/Compile/Compile.js"></script>
+    <script src="./js/Observer.js"></script>
+    <script src="./js/Vue.js"></script>
+    <!-- <script src="./js/utlis/Promise.js"></script> -->
+
+    <script>
+
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    name: '我是v-text指令',
+                    htmlStr: '<h1>123</h1>',
+                    person: {
+                        name: 'personName',
+                        htmlStr: '<h2>456</h3>',
+                        age: 18
+                    },
+                    a: 1,
+                    b: 2,
+                    watchA: '',
+                    watchB: '',
+                    watchTotal: ''
+                }
+            },
+            computed: {
+                total() {
+                    return this.a + this.b
+                }
+            },
+            watch: {
+                a(newValue, oldValue) {
+                    this.watchA = "watch监听到 a 更新了~   新值" + newValue + " 旧值 " + oldValue
+                    console.log("watch监听到 a 更新了~", newValue, oldValue);
+                },
+                b(newValue, oldValue) {
+                    this.watchB = "watch监听到 b 更新了~   新值" + newValue + " 旧值 " + oldValue
+                    console.log("watch监听到 b 更新了~", newValue, oldValue);
+                },
+                total(newValue, oldValue) {
+                    this.watchTotal = "watch监听到 total 更新了~   新值" + newValue + " 旧值 " + oldValue
+                    console.log("watch监听到 total 更新了~", newValue, oldValue);
+                },
+            },
+            methods: {
+                handlerClick(e) {
+                    this.name = "name被修改了，嘻嘻嘻"
+                },
+                handleradda() {
+                    this.a++
+                    console.log(this);
+                },
+                handleraddb() {
+                    this.b++
+                }
+            },
+        })
+
+
+    </script>
+    
+</body>
+</html>
